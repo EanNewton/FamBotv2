@@ -9,7 +9,7 @@ from sqlalchemy import and_, func, select, MetaData, Table, Column, Integer, Str
 # from DisnakeBot.utilities.database import fetch_value, is_admin
 # from ..utilities.wrappers import debug
 from utilities.database import fetch_value, is_admin
-from config.constants import ENGINE, VERBOSE, EXT_SET, DEFAULT_DIR, BOT
+from config.constants import ENGINE, VERBOSE, EXT_SET, DEFAULT_DIR, BOT, RUNNING_ON
 
 
 def setup() -> None:
@@ -303,10 +303,18 @@ def get_quote_log(guild_id: int) -> list:
                 each[0] = 'id_{}'.format(each[0])
                 each[4] = 'g_{}'.format(each[4])
             data_frame[idx] = pd.DataFrame(entries, columns=keys)
-    with pd.ExcelWriter(f'{DEFAULT_DIR}/log/quoteLog_{guild_id}.xlsx', engine='xlsxwriter') as writer:
-        data_frame[1].to_excel(writer, sheet_name='Sheet_1')
-        data_frame[0].to_excel(writer, sheet_name='Sheet_2')
-    return ['Log of all quotes and lore for this guild:', f'{DEFAULT_DIR}/log/quoteLog_{guild_id}.xlsx']
+
+    if RUNNING_ON == 'Linux':
+        with pd.ExcelWriter(f'{DEFAULT_DIR}/../log/quoteLog_{guild_id}.xlsx', engine='xlsxwriter') as writer:
+            data_frame[1].to_excel(writer, sheet_name='Sheet_1')
+            data_frame[0].to_excel(writer, sheet_name='Sheet_2')
+        return ['Log of all quotes and lore for this guild:', f'{DEFAULT_DIR}/../log/quoteLog_{guild_id}.xlsx']
+
+    elif RUNNING_ON == 'Window':
+        with pd.ExcelWriter(f'{DEFAULT_DIR}\\..\\log\\quoteLog_{guild_id}.xlsx', engine='xlsxwriter') as writer:
+            data_frame[1].to_excel(writer, sheet_name='Sheet_1')
+            data_frame[0].to_excel(writer, sheet_name='Sheet_2')
+        return ['Log of all quotes and lore for this guild:', f'{DEFAULT_DIR}\\..\\log\\quoteLog_{guild_id}.xlsx']
 
 
 setup()

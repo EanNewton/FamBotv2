@@ -1,7 +1,7 @@
 import datetime
 import math
 
-from config.constants import DEFAULT_DIR
+from config.constants import DEFAULT_DIR, RUNNING_ON
 
 
 def fetch_file(directory: str, filename: str):
@@ -11,8 +11,12 @@ def fetch_file(directory: str, filename: str):
     :param filename:
     :return:
     """
-    with open('{}/docs/{}/{}.txt'.format(DEFAULT_DIR, directory, filename), 'r') as f:
-        return f.read()
+    if RUNNING_ON == 'Linux':
+        with open(f'{DEFAULT_DIR}/../docs/{directory}/{filename}.txt', 'r') as f:
+            return f.read()
+    if RUNNING_ON == 'Windows':
+        with open(f'{DEFAULT_DIR}\\..\\docs\\{directory}\\{filename}.txt', 'r') as f:
+            return f.read()
 
 
 def wrap(s: str, w: int) -> list:

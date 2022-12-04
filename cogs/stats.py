@@ -198,10 +198,10 @@ def word_count(low: int, high: int, guild: str) -> tuple[disnake.File, disnake.E
     )
     filename = f'{guild}_wordcount.png'
     if RUNNING_ON == 'Linux':
-        plt.savefig(f"{DEFAULT_DIR}/log/stats/{filename}")
+        plt.savefig(f"{DEFAULT_DIR}/../log/stats/{filename}")
         plt.clf()
         image = disnake.File(
-            f'{DEFAULT_DIR}/log/stats/{filename}',
+            f'{DEFAULT_DIR}/../log/stats/{filename}',
             filename=filename
     )
     elif RUNNING_ON == 'Windows':
@@ -242,7 +242,7 @@ def word_cloud(type_: str, guild: str) -> tuple[disnake.File, disnake.Embed]:
     if RUNNING_ON == 'Linux':
         fig.savefig(f"{DEFAULT_DIR}/../log/stats/{filename}")
         plt.clf()
-        image = disnake.File(f'{DEFAULT_DIR}/log/stats/{filename}', filename=filename)
+        image = disnake.File(f'{DEFAULT_DIR}/../log/stats/{filename}', filename=filename)
     elif RUNNING_ON == 'Windows':
         fig.savefig(f'{DEFAULT_DIR}\\..\\log\\stats\\{filename}')
         plt.clf()
@@ -294,10 +294,10 @@ def get_ngrams(low: int, high: int, limit: int, guild: str) -> tuple[disnake.Fil
     filename = f"{guild}_ngram.png"
     figure = bp.get_figure()
     if RUNNING_ON == 'Linux':
-        figure.savefig(f'{DEFAULT_DIR}/log/stats/{filename}')
+        figure.savefig(f'{DEFAULT_DIR}/../log/stats/{filename}')
         plt.clf()
         image = disnake.File(
-            f'{DEFAULT_DIR}/log/stats/{filename}',
+            f'{DEFAULT_DIR}/../log/stats/{filename}',
             filename=filename
         )
     elif RUNNING_ON == 'Windows':

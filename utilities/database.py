@@ -4,7 +4,7 @@ import disnake
 from sqlalchemy import select, MetaData, Table, Column, Integer, String
 
 from config.constants import JSON_FORMATTER_SET, ENGINE, DEFAULT_DIR, VERBOSE
-from config.constants import BOT
+from config.constants import BOT, RUNNING_ON
 from utilities.general import fetch_file
 from utilities.wrappers import debug
 
@@ -63,8 +63,12 @@ def config_load(guild: int) -> None:
     :return: <None>
     """
     # Undo the pretty printing
-    with open('{}/docs/config/{}.json'.format(DEFAULT_DIR, guild), 'r') as f:
-        dict_ = json.loads(f.read().split('```', maxsplit=1)[0])
+    if RUNNING_ON == 'Linux':
+        with open(f'{DEFAULT_DIR}/../docs/config/{guild}.json', 'r') as f:
+            dict_ = json.loads(f.read().split('```', maxsplit=1)[0])
+    elif RUNNING_ON == 'Windows':
+        with open(f'{DEFAULT_DIR}\\..\\docs\\config\\{guild}.json', 'r') as f:
+            dict_ = json.loads(f.read().split('```', maxsplit=1)[0])
     for each in JSON_FORMATTER_SET[1]:
         dict_[each[0]] = dict_.pop(each[1])
     for each in JSON_FORMATTER_SET[0]:
@@ -258,10 +262,16 @@ def config_create(guild: disnake.Guild) -> str:
                 dict_['schedule'] = dict_['schedule'].replace(each[0], each[1])
             for each in JSON_FORMATTER_SET[1]:
                 dict_[each[1]] = dict_.pop(each[0])
-            with open(f'{DEFAULT_DIR}/docs/config/{guild.id}.json', 'w') as f:
-                json.dump(dict_, f, indent=4)
-                f.write(f"\n\n{fetch_file('help', 'config')}")
-            return f'{DEFAULT_DIR}/docs/config/{guild.id}.json'
+            if RUNNING_ON == 'Linux':
+                with open(f'{DEFAULT_DIR}/../docs/config/{guild.id}.json', 'w') as f:
+                    json.dump(dict_, f, indent=4)
+                    f.write(f"\n\n{fetch_file('help', 'config')}")
+                return f'{DEFAULT_DIR}/../docs/config/{guild.id}.json'
+            elif RUNNING_ON == 'Windows':
+                with open(f'{DEFAULT_DIR}\\..\\docs\\config\\{guild.id}.json', 'w') as f:
+                    json.dump(dict_, f, indent=4)
+                    f.write(f"\n\n{fetch_file('help', 'config')}")
+                return f'{DEFAULT_DIR}\\..\\docs\\config\\{guild.id}.json'
         else:
             # Guild has no config entry, create one and try again
             config_create_default(guild)

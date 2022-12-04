@@ -130,6 +130,8 @@ def setup() -> None:
         print('[-] Reading Plex config')
     if RUNNING_ON == 'Windows':
         config.read(f"{DEFAULT_DIR}\\..\\config.ini")
+    elif RUNNING_ON == 'Linux':
+        config.read(f"{DEFAULT_DIR}/../config.ini")
 
     # Connect to Plex
     try:

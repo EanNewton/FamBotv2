@@ -139,7 +139,7 @@ async def wolfram_image(query: str) -> Union[disnake.File, str]:
     try:
         query = URL_WOLF_IMG.format(WOLFRAM, query)
         if RUNNING_ON == 'Linux':
-            file_path = f'{DEFAULT_DIR}/log/wolf/image.gif'
+            file_path = f'{DEFAULT_DIR}/../log/wolf/image.gif'
         elif RUNNING_ON == 'Windows':
             file_path = f'{DEFAULT_DIR}\\..\\log\\wolf\\image.gif'
         async with aiohttp.ClientSession() as session:

@@ -44,14 +44,14 @@ def get_react(guild_id: int, nsfw: bool) -> str:
         # Generate a list of possible gif files to choose from
         reacts = [abspath("gifs/" + file) for file in listdir('./gifs')]
         # Include guild_id-specific results
-        if isdir(f'{DEFAULT_DIR}/gifs/{guild_id}'):
+        if isdir(f'{DEFAULT_DIR}/../gifs/{guild_id}'):
             reacts.extend(
-                [abspath(f'gifs/{guild_id}/{each}') for each in listdir(f'./gifs/{guild_id}')]
+                [abspath(f'{DEFAULT_DIR}/../gifs/{guild_id}/{each}') for each in listdir(f'{DEFAULT_DIR}/../gifs/{guild_id}')]
             )
         # Include guild_id-specific nsfw results
-        if nsfw and isdir(f'{DEFAULT_DIR}/gifs/{guild_id}/nsfw'):
+        if nsfw and isdir(f'{DEFAULT_DIR}/../gifs/{guild_id}/nsfw'):
             reacts.extend(
-                [abspath(f'gifs/{guild_id}/nsfw/{each}') for each in listdir(f'./gifs/{guild_id}/nsfw')]
+                [abspath(f'{DEFAULT_DIR}/../gifs/{guild_id}/nsfw/{each}') for each in listdir(f'{DEFAULT_DIR}/../gifs/{guild_id}/nsfw')]
             )
         return choice(reacts)
 
