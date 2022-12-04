@@ -138,15 +138,15 @@ def get_quote(guild_id: int, _table: Table, username=None, quote_id=None, raw=Fa
                 elif _table.name == 'famLore':
                     stm = '---Scribed by the Lore Master {}, on the blessed day of {}'
                     title = f"Lore {result[0]}"
-        if raw:
-            # Check if there is an attached img or file to send as well
-            if len(result) > 6 and result[6]:
-                stm = stm + '\n' + result[6]
-                result[2].replace(result[6], '')
-            # Result fields translate as
-            # [1]: author, [2]: quote, [3]: date, [6]: embed url, [7]: jump_url
-            text = result[2]
-            return stm.format(title, text, result[1], result[3])
+            if raw:
+                # Check if there is an attached img or file to send as well
+                if len(result) > 6 and result[6]:
+                    stm = stm + '\n' + result[6]
+                    result[2].replace(result[6], '')
+                # Result fields translate as
+                # [1]: author, [2]: quote, [3]: date, [6]: embed url, [7]: jump_url
+                text = result[2]
+                return stm.format(title, text, result[1], result[3])
         else:
             # TODO implement embed format
             pass

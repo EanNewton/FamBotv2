@@ -42,7 +42,7 @@ def get_react(guild_id: int, nsfw: bool) -> str:
     """
     if exists('./gifs') and RUNNING_ON == 'Linux':
         # Generate a list of possible gif files to choose from
-        reacts = [abspath("gifs/" + file) for file in listdir('./gifs')]
+        reacts = [abspath(f"/gifs/{guild_id}" + file) for file in listdir(f'{DEFAULT_DIR}/../gifs/{guild_id}')]
         # Include guild_id-specific results
         if isdir(f'{DEFAULT_DIR}/../gifs/{guild_id}'):
             reacts.extend(
@@ -57,7 +57,7 @@ def get_react(guild_id: int, nsfw: bool) -> str:
 
     elif RUNNING_ON == 'Windows':
         # Generate a list of possible gif files to choose from
-        reacts = [abspath(f"{DEFAULT_DIR}\\..\\gifs\\{file}") for file in listdir(f"{DEFAULT_DIR}\\..\\gifs\\")]
+        reacts = [abspath(f"{DEFAULT_DIR}\\..\\gifs\\{file}") for file in listdir(f"{DEFAULT_DIR}\\..\\gifs\\{guild_id}")]
         # Include guild_id-specific results
         if isdir(f'{DEFAULT_DIR}\\..\\gifs\\{guild_id}'):
             reacts.extend(
